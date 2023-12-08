@@ -52,5 +52,5 @@ tmp_email/
 
 # codesanbox
 
-.codesandbox/
+.json
 .devcontainer/
