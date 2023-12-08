@@ -20,12 +20,13 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // console.log(accessToken, refreshToken);
-    if (accessToken === null || refreshToken === null) {
-      return <Navigate to="/" />;
-    } else if (accessToken === null) {
+    if (accessToken === null && refreshToken === null) {
+      setUser(null);
+      setError(null);
+    } else if (refreshToken !== null && accessToken === null) {\
+
     }
-  }, []);
+  });
 
   return (
     <>
