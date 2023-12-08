@@ -23,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
     // console.log(accessToken, refreshToken);
     if (accessToken === null || refreshToken === null) {
       return <Navigate to="/" />;
+    } else if (accessToken === null) {
     }
   }, []);
 
