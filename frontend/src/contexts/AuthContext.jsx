@@ -1,12 +1,44 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 const AuthContext = createContext();
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router-dom";
+
+import axios from "axios";
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    username: "damodar",
-  });
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access") || null,
+  );
+  const [refreshToken, setRefreshToken] = useState(
+    localStorage.getItem("refresh") || null,
+  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // console.log(accessToken, refreshToken);
+    if (accessToken === null || refreshToken === null) {
+      return <Navigate to="/" />;
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
+      <AuthContext.Provider value={{ user, error }}>
+        {children}
+      </AuthContext.Provider>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
   Button,
+  Snackbar,
 } from "@mui/material";
 import React from "react";
 import { useState, useContext } from "react";
@@ -61,6 +62,12 @@ export default function LoginPage() {
           <Button onClick={handleSubmit}>Login</Button>
         </Stack>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={true}
+        autoHideDuration={60}
+        message={"Login Failed"}
+      />
     </Box>
   );
 }
