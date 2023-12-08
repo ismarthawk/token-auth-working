@@ -48,3 +48,9 @@ tmp_email/
 .direnv
 .envrc
 .tool-versions
+
+
+# codesanbox
+
+.codesanbox/
+.devcontainer/
