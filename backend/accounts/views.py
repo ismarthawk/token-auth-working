@@ -7,15 +7,14 @@ from rest_framework.authentication import TokenAuthentication
 # Create your views here.
 
 
-
-
-
-class GetRoutes(APIView) :
+class GetRoutes(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    def get(self, request) :
+
+    def get(self, request):
         user = request.user
-        if user :
+        if user:
             print(user.password)
+            print(user.username)
         # print(request)
-        routes = [ 'auth/token', 'auth/token/refresh']
+        routes = ['banglore', 'kolkath']
         return Response(routes)

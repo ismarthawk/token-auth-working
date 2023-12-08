@@ -1,13 +1,18 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from api.models import Book
 from api.serializers import BookSerializer
 from rest_framework import permissions
+from rest_framework.mixins import (
+    ListModelMixin,
+    CreateModelMixin,
+    RetrieveModelMixin,
+)
 
 
-class BookViewSet(ModelViewSet) :
+class BookViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin, GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Book.objects.all()
     serializer_class = BookSerializer

@@ -15,7 +15,7 @@ function App() {
         const res = await axios.post(
           "https://fdcl5f-8000.csb.app/auth/token/",
           {
-            username: "damodar",
+            username: "daddy",
             password: "dadsgift",
           },
           {
@@ -28,6 +28,7 @@ function App() {
           },
         );
         const token = res.data.access;
+        console.log(token);
         const response = await axios.get(
           "https://fdcl5f-8000.csb.app/auth/routes/",
           {
@@ -46,6 +47,17 @@ function App() {
           },
         });
         console.log(resp);
+
+        const respon = await axios.get(
+          "https://fdcl5f-8000.csb.app/api/books/14/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        console.log(respon);
       } catch (err) {
         console.log(err);
       }
