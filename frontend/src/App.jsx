@@ -1,94 +1,27 @@
-import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-
 import axios from "axios";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [routes, setRoutes] = useState([]);
-
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      try {
-        const res = await axios.post(
-          "https://fdcl5f-8000.csb.app/auth/token/",
-          {
-            username: "daddy",
-            password: "dadsgift",
-          },
-          {
-            // withCredentials: true,
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              // 'X-CSRFToken': csrftoken
-            },
-          },
-        );
-        const token = res.data.access;
-        console.log(token);
-        const response = await axios.get(
-          "https://fdcl5f-8000.csb.app/auth/routes/",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        console.log(response.data);
-
-        const resp = await axios.get("https://fdcl5f-8000.csb.app/api/books/", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(resp);
-
-        const respon = await axios.get(
-          "https://fdcl5f-8000.csb.app/api/books/14/",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        console.log(respon);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchRoutes();
-    return () => {};
-  }, []);
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="" element={<LoginPage />} />
+          <Route
+            path="home"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
