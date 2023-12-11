@@ -7,6 +7,7 @@ export const AuthContextProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const getUserFromToken = (token) => {
     if (token) {
@@ -17,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (credentials) => {
     setIsLoading(true);
+    setError(null);
     const response = await fetch("https://fdcl5f-8000.csb.app/auth/token/", {
       method: "POST",
       headers: {
@@ -31,10 +33,12 @@ export const AuthContextProvider = ({ children }) => {
       setUser(user);
       setAccessToken(data.access);
       setRefreshToken(data.refresh);
+      setError("logged in");
       console.log(user);
     } else {
       // Handle errors
       console.log(data);
+      setError("Invalid Credentials");
     }
   };
 
@@ -45,6 +49,7 @@ export const AuthContextProvider = ({ children }) => {
     setAccessToken(null);
     setRefreshToken(null);
     setIsLoading(false);
+    setError("logged out");
   };
 
   useEffect(() => {
@@ -93,6 +98,7 @@ export const AuthContextProvider = ({ children }) => {
         logout,
         isLoading,
         color: "blue",
+        error,
       }}
     >
       {children}
