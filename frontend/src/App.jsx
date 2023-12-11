@@ -1,29 +1,9 @@
-import axios from "axios";
-import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import Navbar from "./components/Navbar";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+// import './App.css'
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="" element={<LoginPage />} />
-          <Route
-            path="home"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
+  return <>Hi</>;
 }
 
 export default App;
